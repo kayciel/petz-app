@@ -18,8 +18,12 @@ class EditProfileViewController: UIViewController {
     let contactLabel = UILabel()
     let contactTextField = UITextField()
     let hostButton = UIButton()
+    let hostLabel = UILabel()
     let ownerButton = UIButton()
+    let ownerLabel = UILabel()
     let saveButton = UIButton()
+    let checkedImage = UIImage(systemName: "checkmark.square.fill")
+    let uncheckedImage = UIImage(systemName: "checkmark.square")
     weak var delegate: UpdateProfileDelegate?
     var profile : Profile?
 
@@ -32,6 +36,16 @@ class EditProfileViewController: UIViewController {
         usernameTextField.text = profile.username
         bioTextField.text = profile.bio
         contactTextField.text = profile.contact
+        if (profile.host){
+            hostButton.setImage(UIImage(systemName: "checkmark.square.fill"), for: .normal)
+        }else {
+            hostButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+        }
+        if (profile.owner){
+            ownerButton.setImage(UIImage(systemName: "checkmark.square.fill"), for: .normal)
+        } else {
+            ownerButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+        }
     }
 
     required init?(coder: NSCoder) {
@@ -86,6 +100,23 @@ class EditProfileViewController: UIViewController {
         contactTextField.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(contactTextField)
         
+        hostButton.translatesAutoresizingMaskIntoConstraints = false
+        hostButton.addTarget(self, action: #selector(updateHost), for: .touchUpInside)
+        view.addSubview(hostButton)
+        
+        hostLabel.text = "host"
+        hostLabel.font = .systemFont(ofSize: 15)
+        hostLabel.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(hostLabel)
+        
+        ownerButton.translatesAutoresizingMaskIntoConstraints = false
+        ownerButton.addTarget(self, action: #selector(updateOwner), for: .touchUpInside)
+        view.addSubview(ownerButton)
+        
+        ownerLabel.text = "owner"
+        ownerLabel.font = .systemFont(ofSize: 15)
+        ownerLabel.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(ownerLabel)
         
         saveButton.setTitle("SAVE", for: .normal)
         saveButton.setTitleColor(.systemBlue, for: .normal)
@@ -126,7 +157,7 @@ class EditProfileViewController: UIViewController {
             bioTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor,constant: 20),
             bioTextField.topAnchor.constraint(equalTo:bioLabel.bottomAnchor, constant: 10),
             bioTextField.widthAnchor.constraint(equalToConstant: 300),
-            bioTextField.heightAnchor.constraint(equalToConstant: 40)
+            bioTextField.heightAnchor.constraint(equalToConstant: 100)
         ])
         NSLayoutConstraint.activate([
             contactLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor,constant: 20),
@@ -136,25 +167,55 @@ class EditProfileViewController: UIViewController {
             contactTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor,constant: 20),
             contactTextField.topAnchor.constraint(equalTo: contactLabel.bottomAnchor, constant: 10),
             contactTextField.widthAnchor.constraint(equalToConstant: 300),
-            contactTextField.heightAnchor.constraint(equalToConstant: 100)
+            contactTextField.heightAnchor.constraint(equalToConstant: 40)
+        ])
+        NSLayoutConstraint.activate([
+            hostButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            hostButton.topAnchor.constraint(equalTo: contactLabel.bottomAnchor, constant: 80)
+        ])
+        NSLayoutConstraint.activate([
+            hostLabel.trailingAnchor.constraint(equalTo: hostButton.leadingAnchor, constant: 60),
+            hostLabel.bottomAnchor.constraint(equalTo: hostButton.bottomAnchor)
+        ])
+        NSLayoutConstraint.activate([
+            ownerButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            ownerButton.topAnchor.constraint(equalTo: hostButton.bottomAnchor, constant: 40)
+        ])
+        NSLayoutConstraint.activate([
+            ownerLabel.trailingAnchor.constraint(equalTo: ownerButton.leadingAnchor, constant: 60),
+            ownerLabel.bottomAnchor.constraint(equalTo: ownerButton.bottomAnchor)
         ])
         NSLayoutConstraint.activate([
             saveButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            saveButton.topAnchor.constraint(equalTo: contactLabel.bottomAnchor, constant: 40)
+            saveButton.topAnchor.constraint(equalTo: ownerLabel.bottomAnchor, constant: 40)
         ])
     }
     
     @objc func dismissView(){
         dismiss(animated: true)
         if let nameText = nameTextField.text, let usernameText = usernameTextField.text, let bioText = bioTextField.text, let contactText = contactTextField.text{
-            delegate?.updateProfile(name: nameText, username: usernameText, bio: bioText, contact: contactText)
+            delegate?.updateProfile(name: nameText, username: usernameText, bio: bioText, contact: contactText, host: hostButton.currentImage == checkedImage, owner: ownerButton.currentImage == checkedImage)
         }
     }
-
+    @objc func updateHost(){
+        if (hostButton.currentImage == checkedImage){
+            hostButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+        }else {
+            hostButton.setImage(UIImage(systemName: "checkmark.square.fill"), for: .normal)
+        }
+    }
+    
+    @objc func updateOwner(){
+        if (ownerButton.currentImage == checkedImage){
+            ownerButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+        }else {
+            ownerButton.setImage(UIImage(systemName: "checkmark.square.fill"), for: .normal)
+        }
+    }
 
 }
 
 protocol UpdateProfileDelegate : ProfilePushViewController {
-    func updateProfile(name: String, username: String, bio: String, contact: String)
+    func updateProfile(name: String, username: String, bio: String, contact: String, host: Bool, owner: Bool)
         
 }

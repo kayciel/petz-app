@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		211CD0E52A0405A700EB88CD /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211CD0E42A0405A700EB88CD /* CustomTableViewCell.swift */; };
+		211CD0E72A0405E800EB88CD /* DetailedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211CD0E62A0405E800EB88CD /* DetailedViewController.swift */; };
+		211CD0E92A04062500EB88CD /* PetCare.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211CD0E82A04062500EB88CD /* PetCare.swift */; };
+		211CD0EB2A04064400EB88CD /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211CD0EA2A04064400EB88CD /* Review.swift */; };
+		211CD0ED2A04066400EB88CD /* ReviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211CD0EC2A04066400EB88CD /* ReviewTableViewCell.swift */; };
+		211CD0EF2A0409BD00EB88CD /* TransactionPushViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211CD0EE2A0409BD00EB88CD /* TransactionPushViewController.swift */; };
+		211CD0F12A044C3200EB88CD /* TransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211CD0F02A044C3200EB88CD /* TransactionTableViewCell.swift */; };
+		211CD0F32A04506F00EB88CD /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211CD0F22A04506F00EB88CD /* Transaction.swift */; };
 		2134852429FEFEA200354611 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2134852329FEFEA200354611 /* EditProfileViewController.swift */; };
 		2186952E29FDA194004DA310 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2186952D29FDA194004DA310 /* Profile.swift */; };
 		2186953029FDA2C8004DA310 /* ProfilePushViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2186952F29FDA2C7004DA310 /* ProfilePushViewController.swift */; };
@@ -19,6 +27,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		211CD0E42A0405A700EB88CD /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
+		211CD0E62A0405E800EB88CD /* DetailedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedViewController.swift; sourceTree = "<group>"; };
+		211CD0E82A04062500EB88CD /* PetCare.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetCare.swift; sourceTree = "<group>"; };
+		211CD0EA2A04064400EB88CD /* Review.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
+		211CD0EC2A04066400EB88CD /* ReviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewTableViewCell.swift; sourceTree = "<group>"; };
+		211CD0EE2A0409BD00EB88CD /* TransactionPushViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionPushViewController.swift; sourceTree = "<group>"; };
+		211CD0F02A044C3200EB88CD /* TransactionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionTableViewCell.swift; sourceTree = "<group>"; };
+		211CD0F22A04506F00EB88CD /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 		2134852329FEFEA200354611 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		2186952D29FDA194004DA310 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		2186952F29FDA2C7004DA310 /* ProfilePushViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePushViewController.swift; sourceTree = "<group>"; };
@@ -65,9 +81,17 @@
 				218EC6D329FB0839003F4BD8 /* AppDelegate.swift */,
 				2186952D29FDA194004DA310 /* Profile.swift */,
 				218EC6D529FB0839003F4BD8 /* SceneDelegate.swift */,
-				218EC6D729FB0839003F4BD8 /* ViewController.swift */,
+				211CD0E42A0405A700EB88CD /* CustomTableViewCell.swift */,
+				211CD0E62A0405E800EB88CD /* DetailedViewController.swift */,
 				2134852329FEFEA200354611 /* EditProfileViewController.swift */,
 				2186952F29FDA2C7004DA310 /* ProfilePushViewController.swift */,
+				211CD0E82A04062500EB88CD /* PetCare.swift */,
+				211CD0EA2A04064400EB88CD /* Review.swift */,
+				211CD0EC2A04066400EB88CD /* ReviewTableViewCell.swift */,
+				211CD0F22A04506F00EB88CD /* Transaction.swift */,
+				211CD0F02A044C3200EB88CD /* TransactionTableViewCell.swift */,
+				211CD0EE2A0409BD00EB88CD /* TransactionPushViewController.swift */,
+				218EC6D729FB0839003F4BD8 /* ViewController.swift */,
 				218EC6D929FB0839003F4BD8 /* Main.storyboard */,
 				218EC6DC29FB083C003F4BD8 /* Assets.xcassets */,
 				218EC6DE29FB083C003F4BD8 /* LaunchScreen.storyboard */,
@@ -147,9 +171,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				211CD0F32A04506F00EB88CD /* Transaction.swift in Sources */,
 				218EC6D829FB0839003F4BD8 /* ViewController.swift in Sources */,
 				2186953029FDA2C8004DA310 /* ProfilePushViewController.swift in Sources */,
+				211CD0E92A04062500EB88CD /* PetCare.swift in Sources */,
+				211CD0EF2A0409BD00EB88CD /* TransactionPushViewController.swift in Sources */,
+				211CD0E72A0405E800EB88CD /* DetailedViewController.swift in Sources */,
 				2134852429FEFEA200354611 /* EditProfileViewController.swift in Sources */,
+				211CD0F12A044C3200EB88CD /* TransactionTableViewCell.swift in Sources */,
+				211CD0EB2A04064400EB88CD /* Review.swift in Sources */,
+				211CD0ED2A04066400EB88CD /* ReviewTableViewCell.swift in Sources */,
+				211CD0E52A0405A700EB88CD /* CustomTableViewCell.swift in Sources */,
 				2186952E29FDA194004DA310 /* Profile.swift in Sources */,
 				218EC6D429FB0839003F4BD8 /* AppDelegate.swift in Sources */,
 				218EC6D629FB0839003F4BD8 /* SceneDelegate.swift in Sources */,

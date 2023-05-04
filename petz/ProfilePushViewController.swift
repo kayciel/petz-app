@@ -106,16 +106,24 @@ class ProfilePushViewController: UIViewController {
 }
 
 extension ProfilePushViewController: UpdateProfileDelegate {
-    func updateProfile(name: String, username: String, bio: String, contact: String){
+    func updateProfile(name: String, username: String, bio: String, contact: String, host: Bool, owner: Bool){
         nameLabel.text = name
         usernameLabel.text = username
         bioTextView.text = bio
         contactLabel.text = contact
-//        if (host){
-//            hostLabel.text = "Host"
-//        }
-//        if (owner){
-//            ownerLabel.text = "Owner"
-//        }
+        if (host){
+            hostLabel.text = "Host"
+            hostLabel.backgroundColor = .systemPink
+        } else {
+            hostLabel.text = ""
+            hostLabel.backgroundColor = .white
+        }
+        if (owner){
+            ownerLabel.text = "Owner"
+            ownerLabel.backgroundColor = .systemCyan
+        } else {
+            ownerLabel.text = ""
+            ownerLabel.backgroundColor = .white
+        }
     }
 }
