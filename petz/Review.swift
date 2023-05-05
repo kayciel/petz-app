@@ -8,18 +8,18 @@
 import Foundation
 import UIKit
 
-class Review {
-    var reviewID: String
-    var reviewRating: String
-    var reviewText: String
-    var reviewer_ID: String
-    var reviewee_ID: String
+struct Review: Codable {
+    var id: Int
+    var rating: Int
+    var text: String
+    var date: String
+    var reviewee_id: Int
 
-    init(reviewID: String, reviewRating: String, reviewText: String, reviewer_ID: String, reviewee_ID: String) {
-        self.reviewID = reviewID
-        self.reviewRating = reviewRating
-        self.reviewText = reviewText
-        self.reviewer_ID = reviewer_ID
-        self.reviewee_ID = reviewee_ID
+    init(id: Int, rating: Int, text: String, date: String, reviewee_id: Int) {
+        self.id = id
+        self.rating = rating
+        self.text = text
+        self.date = date
+        self.reviewee_id = reviewee_id
     }
 }

@@ -8,13 +8,13 @@
 import UIKit
 
 class EditProfileViewController: UIViewController {
-    
+
     let nameLabel = UILabel()
     let nameTextField = UITextField()
     let usernameLabel = UILabel()
     let usernameTextField = UITextField()
     let bioLabel = UILabel()
-    let bioTextField = UITextField()
+    let bioTextView = UITextView()
     let contactLabel = UILabel()
     let contactTextField = UITextField()
     let hostButton = UIButton()
@@ -25,23 +25,23 @@ class EditProfileViewController: UIViewController {
     let checkedImage = UIImage(systemName: "checkmark.square.fill")
     let uncheckedImage = UIImage(systemName: "checkmark.square")
     weak var delegate: UpdateProfileDelegate?
-    var profile : Profile?
+    var petCare: PetCare?
 
 
-    init(profile: Profile, delegate: UpdateProfileDelegate){
-        self.profile = profile
+    init(petCare: PetCare, delegate: UpdateProfileDelegate){
+        self.petCare = petCare
         self.delegate = delegate
         super.init(nibName: nil, bundle: nil)
-        nameTextField.text = profile.name
-        usernameTextField.text = profile.username
-        bioTextField.text = profile.bio
-        contactTextField.text = profile.contact
-        if (profile.host){
+        nameTextField.text = petCare.name
+        usernameTextField.text = petCare.username
+        bioTextView.text = petCare.bio
+        contactTextField.text = petCare.contact
+        if (petCare.host){
             hostButton.setImage(UIImage(systemName: "checkmark.square.fill"), for: .normal)
         }else {
             hostButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
         }
-        if (profile.owner){
+        if (petCare.owner){
             ownerButton.setImage(UIImage(systemName: "checkmark.square.fill"), for: .normal)
         } else {
             ownerButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
@@ -67,6 +67,10 @@ class EditProfileViewController: UIViewController {
         
         nameTextField.backgroundColor = .lightGray
         nameTextField.textColor = .black
+        nameTextField.layer.cornerRadius = 5
+        nameTextField.clipsToBounds = true
+        nameTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: nameTextField.frame.height))
+        nameTextField.leftViewMode = .always
         nameTextField.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(nameTextField)
         
@@ -77,6 +81,10 @@ class EditProfileViewController: UIViewController {
         
         usernameTextField.backgroundColor = .lightGray
         usernameTextField.textColor = .black
+        usernameTextField.layer.cornerRadius = 5
+        usernameTextField.clipsToBounds = true
+        usernameTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: usernameTextField.frame.height))
+        usernameTextField.leftViewMode = .always
         usernameTextField.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(usernameTextField)
         
@@ -85,10 +93,13 @@ class EditProfileViewController: UIViewController {
         bioLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(bioLabel)
         
-        bioTextField.backgroundColor = .lightGray
-        bioTextField.textColor = .black
-        bioTextField.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(bioTextField)
+        bioTextView.backgroundColor = .lightGray
+        bioTextView.textColor = .black
+        bioTextView.isEditable = true
+        bioTextView.layer.cornerRadius = 5
+        bioTextView.clipsToBounds = true
+        bioTextView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(bioTextView)
         
         contactLabel.text = "CONTACT"
         contactLabel.font = .systemFont(ofSize: 15)
@@ -97,6 +108,10 @@ class EditProfileViewController: UIViewController {
         
         contactTextField.backgroundColor = .lightGray
         contactTextField.textColor = .black
+        contactTextField.layer.cornerRadius = 5
+        contactTextField.clipsToBounds = true
+        contactTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: contactTextField.frame.height))
+        contactTextField.leftViewMode = .always
         contactTextField.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(contactTextField)
         
@@ -154,14 +169,14 @@ class EditProfileViewController: UIViewController {
             bioLabel.topAnchor.constraint(equalTo: usernameTextField.bottomAnchor , constant: 20)
         ])
         NSLayoutConstraint.activate([
-            bioTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor,constant: 20),
-            bioTextField.topAnchor.constraint(equalTo:bioLabel.bottomAnchor, constant: 10),
-            bioTextField.widthAnchor.constraint(equalToConstant: 300),
-            bioTextField.heightAnchor.constraint(equalToConstant: 100)
+            bioTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor,constant: 20),
+            bioTextView.topAnchor.constraint(equalTo:bioLabel.bottomAnchor, constant: 10),
+            bioTextView.widthAnchor.constraint(equalToConstant: 300),
+            bioTextView.heightAnchor.constraint(equalToConstant: 100)
         ])
         NSLayoutConstraint.activate([
             contactLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor,constant: 20),
-            contactLabel.topAnchor.constraint(equalTo: bioTextField.bottomAnchor , constant: 20)
+            contactLabel.topAnchor.constraint(equalTo: bioTextView.bottomAnchor , constant: 20)
         ])
         NSLayoutConstraint.activate([
             contactTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor,constant: 20),
@@ -193,8 +208,10 @@ class EditProfileViewController: UIViewController {
     
     @objc func dismissView(){
         dismiss(animated: true)
-        if let nameText = nameTextField.text, let usernameText = usernameTextField.text, let bioText = bioTextField.text, let contactText = contactTextField.text{
+        if let nameText = nameTextField.text, let usernameText = usernameTextField.text, let bioText = bioTextView.text, let contactText = contactTextField.text{
             delegate?.updateProfile(name: nameText, username: usernameText, bio: bioText, contact: contactText, host: hostButton.currentImage == checkedImage, owner: ownerButton.currentImage == checkedImage)
+            NetworkManager.shared.editSitter(name: nameText, username: usernameText, bio: bioText, contact: contactText, overall_rating: petCare!.overall_rating, host: hostButton.currentImage == checkedImage, owner: ownerButton.currentImage == checkedImage, categories_h: petCare!.categories_h, categories_o: petCare!.categories_o, reviews: petCare!.reviews, available: petCare!.available ) { petCare in
+            }
         }
     }
     @objc func updateHost(){

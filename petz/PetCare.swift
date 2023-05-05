@@ -8,24 +8,37 @@
 import Foundation
 import UIKit
 
-class PetCare {
-    var petCarePicName: String
+struct PetCare: Codable {
+    var id: Int
     var name: String
-    var contact: String
-    var overallRating: String
+    var username: String
     var bio: String
-    var id: String
-    var avalibility: Bool
+    var contact: String
+    var overall_rating: Float
     var reviews: [Review]
+    var host: Bool
+    var owner: Bool
+    var categories_h: [String]
+    var categories_o: [String]
+    var available: Bool
 
-    init(petCarePicName: String, name: String, contact: String, overallRating: String, id: String, bio: String, avalibility: Bool, reviews: [Review]) {
-        self.petCarePicName = petCarePicName
-        self.name = name
-        self.contact = contact
-        self.overallRating = overallRating
-        self.reviews = reviews
-        self.avalibility = avalibility
+    init(id: Int, name: String, username: String,  bio: String, contact: String, overall_rating: Float, host: Bool, owner: Bool, categories_h: [ String ] , categories_o: [ String ], available: Bool, reviews: [Review]) {
         self.id = id
+        self.name = name
+        self.username = username
         self.bio = bio
+        self.contact = contact
+        self.overall_rating = overall_rating
+        self.host = host
+        self.owner = owner
+        self.categories_h = categories_h
+        self.categories_o = categories_o
+        self.reviews = reviews
+        self.available = available
     }
+
+}
+
+struct Response: Codable {
+    var users: [PetCare]
 }

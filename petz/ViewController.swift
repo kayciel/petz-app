@@ -9,10 +9,11 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    var PetCares: [PetCare] = []
+    var sittersData: [PetCare] = []
     let tableView = UITableView()
-    let reuseID = "my cell"
+    let reuseID = "sitter"
     var currentIndex = IndexPath()
+    let refreshControl = UIRefreshControl()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,15 +21,10 @@ class ViewController: UIViewController {
         view.backgroundColor = .white
         title = "Pet Sitters"
         view.backgroundColor = .white
-        let review0 = Review(reviewID: "ReviewID: 0", reviewRating: "Rating: 10", reviewText: "IDK", reviewer_ID: "Reviewer ID: 123", reviewee_ID: "321")
-        let review1 = Review(reviewID: "ReviewID: 1", reviewRating: "Rating: 9.5", reviewText: "LOL", reviewer_ID: "Reviewer ID: 321", reviewee_ID: "123")
-
-        let PetCare0 = PetCare(petCarePicName: "Profile0", name: "Name: Jack", contact: "Contact: 123456789", overallRating: "Average Rating: 10.0", id: "ID: 123", bio: "xyz", avalibility: true, reviews: [review0, review1])
+//        let review0 = Review(reviewID: "ReviewID: 0", reviewRating: "Rating: 10", reviewText: "IDK", reviewer_ID: "Reviewer ID: 123", reviewee_ID: "321")
+//        let review1 = Review(reviewID: "ReviewID: 1", reviewRating: "Rating: 9.5", reviewText: "LOL", reviewer_ID: "Reviewer ID: 321", reviewee_ID: "123")
         
-        let PetCare1 = PetCare(petCarePicName: "Profile1", name: "Name: Anna", contact: "Contact: 987654321", overallRating: "Average Rating: 9.5", id: "ID: 321", bio: "College Student", avalibility: true, reviews: [review1])
-    
-        
-        PetCares = [PetCare0,PetCare1]
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
@@ -37,7 +33,7 @@ class ViewController: UIViewController {
         self.view.addSubview(tableView)
         
         setUpConstraints()
-
+        createSittersData()
     }
     
     func setUpConstraints() {
@@ -48,7 +44,26 @@ class ViewController: UIViewController {
             tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor)
         ])
     }
-
+    
+    func createSittersData(){
+        NetworkManager.shared.getAllSitters { sitters in
+            DispatchQueue.main.async {
+                self.sittersData = sitters
+                self.tableView.reloadData()
+            }
+        }
+    }
+    
+    @objc func refreshData() {
+  
+        NetworkManager.shared.getAllSitters { sitters in
+            DispatchQueue.main.sync {
+                self.sittersData = sitters
+                self.tableView.reloadData()
+                self.refreshControl.endRefreshing()
+            }
+        }
+    }
 
 }
 
@@ -56,7 +71,7 @@ extension ViewController: UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.currentIndex = indexPath
-        let currentPetCare = PetCares[indexPath.row]
+        let currentPetCare = sittersData[indexPath.row]
         let vc = DetailViewController(PetCare: currentPetCare)
         // vc.del = self
         navigationController?.pushViewController(vc, animated: true)
@@ -65,12 +80,12 @@ extension ViewController: UITableViewDelegate{
 
 extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return PetCares.count
+        return sittersData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: reuseID, for: indexPath) as? CustomTableViewCell{
-            let currentPetCare = PetCares[indexPath.row]
+            let currentPetCare = sittersData[indexPath.row]
             
             cell.updateFrom(petCare: currentPetCare)
             return cell

@@ -15,12 +15,14 @@ class ProfilePushViewController: UIViewController {
     let hostLabel = UILabel()
     let ownerLabel = UILabel()
     var editProfileButton = UIButton()
-    var profile = Profile(name: "Sally Smith", username: "ilovecats101", bio: "I am a sophomore at Cornell University and I enjoy spending time with cats", contact: "sally@cornell.edu", host: true, owner: true)
+    var petCare : PetCare = PetCare(id: 1, name: "", username: "",  bio: "", contact: "", overall_rating: 10, host: true, owner: true, categories_h: [] , categories_o: [ ], available: true, reviews: [])
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .white
+        
+        petCare = getProfile()
 
         nameLabel.text = "Sally Smith"
         nameLabel.font = .systemFont(ofSize: 15)
@@ -99,7 +101,14 @@ class ProfilePushViewController: UIViewController {
     }
     
     @objc func presentEditView() {
-        present(EditProfileViewController(profile: profile, delegate: self) , animated: true)
+        present(EditProfileViewController(petCare: petCare, delegate: self) , animated: true)
+    }
+    
+    func getProfile() -> PetCare {
+        NetworkManager.shared.getCurrentProfile { petCare in
+            self.petCare = petCare
+            return petCare
+        }
     }
 
 }
@@ -125,4 +134,5 @@ extension ProfilePushViewController: UpdateProfileDelegate {
             ownerLabel.backgroundColor = .white
         }
     }
+    
 }

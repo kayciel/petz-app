@@ -11,15 +11,14 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     let nameLabel = UILabel()
     let idLabel = UILabel()
     let contactLabel = UILabel()
+    let contactLabelDec = UILabel()
     let overallRatingLabel = UILabel()
-    let bioLabel = UILabel()
+    let overallRatingLabelDec = UILabel()
+    let bioTextView = UITextView()
     let tableView = UITableView()
     let reuseID = "My Review"
     var currentIndex = IndexPath()
 
-    
-    // weak var del: updateCell?
-    
     
     let PetCare: PetCare
     init(PetCare: PetCare) {
@@ -34,11 +33,11 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         super.viewDidLoad()
         view.backgroundColor = .white
 
-        picImageView.image = UIImage(named:PetCare.petCarePicName)
+        picImageView.image = UIImage(named:"Profile0")
         picImageView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(picImageView)
         
-        idLabel.text = PetCare.id
+        idLabel.text = String(PetCare.id)
         idLabel.font = .systemFont(ofSize: 20)
         idLabel.layer.cornerRadius = 5
         idLabel.clipsToBounds = true
@@ -47,20 +46,20 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         view.addSubview(idLabel)
         
         nameLabel.text = PetCare.name
-        nameLabel.font = .systemFont(ofSize: 20)
+        nameLabel.font = .boldSystemFont(ofSize: 25)
         nameLabel.layer.cornerRadius = 5
         nameLabel.clipsToBounds = true
         nameLabel.textAlignment = .center
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(nameLabel)
     
-        bioLabel.text = PetCare.bio
-        bioLabel.font = .systemFont(ofSize: 20)
-        bioLabel.layer.cornerRadius = 5
-        bioLabel.clipsToBounds = true
-        bioLabel.textAlignment = .center
-        bioLabel.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(bioLabel)
+        bioTextView.text = PetCare.bio
+        bioTextView.font = .systemFont(ofSize: 20)
+        bioTextView.layer.cornerRadius = 5
+        bioTextView.clipsToBounds = true
+        bioTextView.textAlignment = .center
+        bioTextView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(bioTextView)
         
         contactLabel.text = PetCare.contact
         contactLabel.font = .systemFont(ofSize: 20)
@@ -70,13 +69,29 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         contactLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(contactLabel)
         
-        overallRatingLabel.text = PetCare.overallRating
+        contactLabelDec.text = "Contact: "
+        contactLabelDec.font = .systemFont(ofSize: 20)
+        contactLabelDec.layer.cornerRadius = 5
+        contactLabelDec.clipsToBounds = true
+        contactLabelDec.textAlignment = .center
+        contactLabelDec.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(contactLabelDec)
+        
+        overallRatingLabel.text = String(PetCare.overall_rating)
         overallRatingLabel.font = .systemFont(ofSize: 20)
         overallRatingLabel.layer.cornerRadius = 5
         overallRatingLabel.clipsToBounds = true
         overallRatingLabel.textAlignment = .center
         overallRatingLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(overallRatingLabel)
+        
+        overallRatingLabelDec.text = "Average Rating:"
+        overallRatingLabelDec.font = .systemFont(ofSize: 20)
+        overallRatingLabelDec.layer.cornerRadius = 5
+        overallRatingLabelDec.clipsToBounds = true
+        overallRatingLabelDec.textAlignment = .center
+        overallRatingLabelDec.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(overallRatingLabelDec)
 
         self.view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -88,65 +103,64 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         setupConstraints()
     }
 
-//    @objc func changeContactCell() {
-//
-//        if let text = nameLabel.text {
-//            del?.updateName(name: text)
-//        }
-//        if let text = contactLabel.text {
-//            del?.updatecontact(contact: text)
-//        }
-//        if let text = overallRatingLabel.text {
-//            del?.updateoverallRating(overallRating: text)
-//        }
-//
-//    }
-
     func setupConstraints() {
-        NSLayoutConstraint.activate([
-            picImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            picImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            picImageView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5),
-            picImageView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5)
-        ])
-        
-        NSLayoutConstraint.activate([
-            nameLabel.topAnchor.constraint(equalTo: picImageView.bottomAnchor, constant: 10),
-            nameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            nameLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
-        ])
+            NSLayoutConstraint.activate([
+                picImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                picImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+                picImageView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5),
+                picImageView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5)
+            ])
+            
+            NSLayoutConstraint.activate([
+                nameLabel.topAnchor.constraint(equalTo: picImageView.bottomAnchor, constant: 10),
+                nameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                nameLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
+            ])
 
-        NSLayoutConstraint.activate([
-            idLabel.topAnchor.constraint(equalTo: idLabel.bottomAnchor, constant: 10),
-            idLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            idLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
-        ])
+            NSLayoutConstraint.activate([
+                idLabel.topAnchor.constraint(equalTo: idLabel.bottomAnchor, constant: 10),
+                idLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                idLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
+            ])
 
-        NSLayoutConstraint.activate([
-            contactLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 10),
-            contactLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            contactLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
-        ])
-
-        NSLayoutConstraint.activate([
-            overallRatingLabel.topAnchor.constraint(equalTo: contactLabel.bottomAnchor, constant: 10),
-            overallRatingLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            overallRatingLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
-        ])
-        
-        NSLayoutConstraint.activate([
-            bioLabel.topAnchor.constraint(equalTo: overallRatingLabel.bottomAnchor, constant: 10),
-            bioLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            bioLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
-        ])
-        
-        NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: bioLabel.bottomAnchor, constant: 20),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
-        ])
-    }
+            NSLayoutConstraint.activate([
+                contactLabelDec.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 10),
+                contactLabelDec.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -50),
+                contactLabelDec.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
+            ])
+            
+            NSLayoutConstraint.activate([
+                contactLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 10),
+                contactLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 50),
+                contactLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
+            ])
+            
+            NSLayoutConstraint.activate([
+                overallRatingLabelDec.topAnchor.constraint(equalTo: contactLabelDec.bottomAnchor, constant: 10),
+                overallRatingLabelDec.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -20),
+                overallRatingLabelDec.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
+            ])
+            
+            NSLayoutConstraint.activate([
+                overallRatingLabel.topAnchor.constraint(equalTo: contactLabelDec.bottomAnchor, constant: 10),
+                overallRatingLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 80),
+                overallRatingLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
+            ])
+            
+            NSLayoutConstraint.activate([
+                bioTextView.topAnchor.constraint(equalTo: overallRatingLabel.bottomAnchor, constant: 10),
+                bioTextView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                bioTextView.heightAnchor.constraint(equalToConstant: 100),
+                bioTextView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
+            ])
+            
+            NSLayoutConstraint.activate([
+                tableView.topAnchor.constraint(equalTo: bioTextView.bottomAnchor, constant: 10),
+                tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -150),
+                tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
+            ])
+        }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return PetCare.reviews.count
@@ -164,11 +178,3 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
 }
-
-
-//protocol updateCell: UIViewController {
-//    func updateName(name: String)
-//    func updatecontact(contact: String)
-//    func updateoverallRating(overallRating: String)
-//}
-
