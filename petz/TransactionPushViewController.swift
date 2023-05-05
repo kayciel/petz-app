@@ -19,7 +19,7 @@ class TransactionPushViewController: UIViewController, UITableViewDelegate, UITa
         super.viewDidLoad()
 
         view.backgroundColor = .white
-        title = "Your Transactions"
+        title = "Transactions"
         
         let transaction1 = Transaction(amount: 10, message: "Fooddd", sender: "Sally", recipient: "Josephine")
         let transaction2 = Transaction(amount: 1, message: "Candy", sender: "Josephine", recipient: "Baggy")

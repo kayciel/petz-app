@@ -17,10 +17,36 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let windowScene = (scene as? UIWindowScene) else { return }
+        
         let window = UIWindow(windowScene: windowScene)
         self.window = window
-        window.rootViewController = UINavigationController(rootViewController: ViewController())
+        window.rootViewController = createTabbar()
         window.makeKeyAndVisible()
+    }
+    
+    func createProfileNavigationController() -> UINavigationController {
+        let profileVC = ProfilePushViewController()
+        profileVC.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(systemName: "person.crop.circle", withConfiguration: UIImage.SymbolConfiguration(textStyle: .largeTitle)), tag: 0)
+        return UINavigationController(rootViewController: profileVC)
+    }
+    
+    func createSittersNavigationController() -> UINavigationController {
+        let sittersVC = ViewController()
+        sittersVC.tabBarItem = UITabBarItem(title: "Pet Sitters", image: UIImage(systemName: "pawprint.fill", withConfiguration: UIImage.SymbolConfiguration(textStyle: .largeTitle)), tag: 1)
+        return UINavigationController(rootViewController: sittersVC)
+    }
+    
+    func createTransactionsNavigationController() -> UINavigationController {
+        let transactionsVC = TransactionPushViewController()
+        transactionsVC.tabBarItem = UITabBarItem(title: "Transactions", image: UIImage(systemName: "creditcard", withConfiguration: UIImage.SymbolConfiguration(textStyle: .largeTitle)), tag: 2)
+        return UINavigationController(rootViewController: transactionsVC)
+    }
+    
+    func createTabbar() -> UITabBarController {
+        let tabbar = UITabBarController()
+        UITabBar.appearance().tintColor = .lightGray
+        tabbar.viewControllers = [createTransactionsNavigationController(), createSittersNavigationController(), createProfileNavigationController()]
+        return tabbar
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

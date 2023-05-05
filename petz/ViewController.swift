@@ -9,8 +9,6 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    var openProfileButton = UIButton()
-    var transactionsButton = UIButton()
     var PetCares: [PetCare] = []
     let tableView = UITableView()
     let reuseID = "my cell"
@@ -32,17 +30,6 @@ class ViewController: UIViewController {
         
         PetCares = [PetCare0,PetCare1]
         
-        openProfileButton.setImage(UIImage(systemName: "person.crop.circle", withConfiguration: UIImage.SymbolConfiguration(textStyle: .largeTitle)), for: .normal)
-        openProfileButton.setTitleColor(.black, for: .normal)
-        openProfileButton.addTarget(self, action: #selector(pushView), for: .touchUpInside)
-        openProfileButton.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(openProfileButton)
-        
-        transactionsButton.setImage(UIImage(systemName: "creditcard",withConfiguration: UIImage.SymbolConfiguration(textStyle: .largeTitle)), for: .normal)
-        transactionsButton.addTarget(self, action: #selector(pushTransactionsView), for: .touchUpInside)
-        transactionsButton.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(transactionsButton)
-        
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
         tableView.dataSource = self
@@ -55,27 +42,11 @@ class ViewController: UIViewController {
     
     func setUpConstraints() {
         NSLayoutConstraint.activate([
-            openProfileButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
-            openProfileButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30)
-        ])
-        NSLayoutConstraint.activate([
-        transactionsButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
-       transactionsButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30)
-    ])
-        NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: openProfileButton.bottomAnchor),
+            tableView.topAnchor.constraint(equalTo: self.view.topAnchor),
             tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
             tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor)
         ])
-    }
-    
-    @objc func pushView() {
-        navigationController?.pushViewController(ProfilePushViewController(), animated: true)
-    }
-    
-    @objc func pushTransactionsView() {
-        navigationController?.pushViewController(TransactionPushViewController(), animated: true)
     }
 
 

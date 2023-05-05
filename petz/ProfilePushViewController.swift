@@ -55,8 +55,7 @@ class ProfilePushViewController: UIViewController {
         ownerLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(ownerLabel)
         
-        editProfileButton.setTitle("EDIT MY PROFILE", for: .normal)
-        editProfileButton.setTitleColor(.black, for: .normal)
+        editProfileButton.setImage((UIImage(systemName: "square.and.pencil", withConfiguration: UIImage.SymbolConfiguration(textStyle: .largeTitle))), for: .normal)
         editProfileButton.addTarget(self, action: #selector(presentEditView), for: .touchUpInside)
         editProfileButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(editProfileButton)
@@ -95,7 +94,7 @@ class ProfilePushViewController: UIViewController {
         ])
         NSLayoutConstraint.activate([
             editProfileButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
-            editProfileButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30)
+            editProfileButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
         ])
     }
     
